@@ -1,9 +1,9 @@
 class WeatherCondition {
-  icon: String;
+  icon: string;
   message: String;
-  backgroundColor: String;
+  backgroundColor: string;
 
-  constructor(icon: String, message: String, backgroundColor: String) {
+  constructor(icon: string, message: String, backgroundColor: string) {
     this.icon = icon;
     this.message = message;
     this.backgroundColor = backgroundColor;
@@ -20,3 +20,7 @@ export const weatherType = {
   Haze: new WeatherCondition("wind", "It might be a bit damp", "#58586e"),
   Mist: new WeatherCondition("align-justify", "It might be hard to see", "#3e3e37"),
 };
+
+export function getWeatherCondition(condition: string): WeatherCondition {
+  return weatherType[condition as keyof typeof weatherType];
+}

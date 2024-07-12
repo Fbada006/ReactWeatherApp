@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {NavigationContainer} from "@react-navigation/native";
+import {useEffect, useState} from "react";
 import Geolocation from "@react-native-community/geolocation";
 import {WEATHER_API_KEY} from "@env";
 
 export const useGetWeather = () => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<String | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [weather, setWeather] = useState([]);
   const [lat, setLat] = useState<number>(0);
   const [lon, setLon] = useState<number>(0);
@@ -13,7 +12,7 @@ export const useGetWeather = () => {
   const fetchWeatherData = async () => {
     try {
       const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`,
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`,
       );
       const data = await res.json();
       setWeather(data);

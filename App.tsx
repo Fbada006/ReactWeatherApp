@@ -7,17 +7,18 @@ import {useGetWeather} from "./src/hooks/useGetWeather";
 function App(): React.JSX.Element {
   const [loading, error, weather] = useGetWeather();
 
-  if (loading) {
+  if (weather) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size={"large"} color={"blue"} />
-      </View>
+      <NavigationContainer>
+        <Tabs weather={weather} />
+      </NavigationContainer>
     );
   }
+
   return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
+    <View style={styles.container}>
+      <ActivityIndicator size={"large"} color={"blue"} />
+    </View>
   );
 }
 
