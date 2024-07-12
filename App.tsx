@@ -8,7 +8,7 @@ import ErrorItem from "./src/components/ErrorItem";
 function App(): React.JSX.Element {
   const [loading, error, weather] = useGetWeather();
 
-  if (weather != null && weather) {
+  if (weather != null && weather.list && !loading) {
     return (
       <NavigationContainer>
         <Tabs forecast={weather!} />
@@ -18,10 +18,10 @@ function App(): React.JSX.Element {
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator size={"large"} color={"blue"} />
-      ) : (
+      {error ? (
         <ErrorItem />
+      ) : (
+        <ActivityIndicator size={"large"} color={"blue"} />
       )}
     </View>
   );
