@@ -8,9 +8,6 @@ import CityScreen from "../screens/CityScreen";
 const Tab = createBottomTabNavigator();
 
 const Tabs = ({forecast}: any) => {
-  console.log("-------------------------");
-  console.log(forecast);
-  console.log("-------------------------");
   return (
     <Tab.Navigator
       screenOptions={{

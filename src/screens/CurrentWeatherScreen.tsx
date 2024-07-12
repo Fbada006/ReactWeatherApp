@@ -22,7 +22,7 @@ const CurrentWeatherScreen = ({weatherData}: any) => {
     weather,
   } = weatherData;
 
-  const weatherCondition = weather[0].main;
+  const weatherCondition = weather[0]?.main;
 
   return (
     <SafeAreaView
@@ -30,18 +30,22 @@ const CurrentWeatherScreen = ({weatherData}: any) => {
         wrapper,
         {
           backgroundColor:
-            getWeatherCondition(weatherCondition).backgroundColor,
+            getWeatherCondition(weatherCondition)?.backgroundColor,
         },
       ]}>
       <View style={container}>
         <Feather
-          name={getWeatherCondition(weatherCondition).icon}
+          name={
+            getWeatherCondition(weatherCondition)
+              ? getWeatherCondition(weatherCondition)?.icon!
+              : "sun"
+          }
           size={100}
           color={"white"}
         />
 
-        <Text style={tempStyles}>{temp}</Text>
-        <Text style={feels}>{`Feels like ${feels_like}`}</Text>
+        <Text style={tempStyles}>{`${temp}°`}</Text>
+        <Text style={feels}>{`Feels like ${feels_like}°`}</Text>
 
         <RowText
           messageOne={`High: ${temp_max}°`}
@@ -53,8 +57,12 @@ const CurrentWeatherScreen = ({weatherData}: any) => {
       </View>
 
       <RowText
-        messageOne={weather[0].description}
-        messageTwo={getWeatherCondition(weatherCondition).message}
+        messageOne={weather[0]?.description}
+        messageTwo={
+          getWeatherCondition(weatherCondition)
+            ? getWeatherCondition(weatherCondition)?.message!
+            : ""
+        }
         containerStyles={bodyWrapper}
         messageOneStyles={description}
         messageTwoStyles={message}
@@ -65,7 +73,6 @@ const CurrentWeatherScreen = ({weatherData}: any) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "pink",
     flex: 1,
   },
   container: {
@@ -95,10 +102,10 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   description: {
-    fontSize: 48,
+    fontSize: 43,
   },
   message: {
-    fontSize: 30,
+    fontSize: 25,
   },
 });
 

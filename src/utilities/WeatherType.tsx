@@ -21,6 +21,6 @@ export const weatherType = {
   Mist: new WeatherCondition("align-justify", "It might be hard to see", "#3e3e37"),
 };
 
-export function getWeatherCondition(condition: string): WeatherCondition {
+export function getWeatherCondition(condition: string): WeatherCondition | null {
   return weatherType[condition as keyof typeof weatherType];
 }
