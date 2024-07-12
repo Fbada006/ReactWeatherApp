@@ -7,10 +7,10 @@ import {useGetWeather} from "./src/hooks/useGetWeather";
 function App(): React.JSX.Element {
   const [loading, error, weather] = useGetWeather();
 
-  if (weather) {
+  if (weather != null && weather) {
     return (
       <NavigationContainer>
-        <Tabs weather={weather} />
+        <Tabs forecast={weather} />
       </NavigationContainer>
     );
   }

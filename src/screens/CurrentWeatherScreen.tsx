@@ -2,7 +2,7 @@ import React from "react";
 import {View, Text, SafeAreaView, StyleSheet} from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import RowText from "../components/RowText";
-import {getWeatherCondition, weatherType} from "../utilities/WeatherType";
+import {getWeatherCondition} from "../utilities/WeatherType";
 
 const CurrentWeatherScreen = ({weatherData}: any) => {
   const {
