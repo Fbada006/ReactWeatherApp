@@ -11,9 +11,14 @@ const UpcomingWeatherListItem = ({dt_txt, min, max, condition}: ItemProps) => {
   return (
     <View style={item}>
       <Feather
-        name="sun"
+        name={
+          getWeatherCondition(condition)
+            ? getWeatherCondition(condition)?.icon!
+            : "sun"
+        }
         size={50}
-        color={getWeatherCondition(condition).icon}></Feather>
+        color={"white"}
+      />
       <View style={dateTextWrapper}>
         <Text style={date}>{moment(dt_txt).format("dddd")}</Text>
         <Text style={date}>{moment(dt_txt).format("h:mm:ss a")}</Text>
@@ -32,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     borderWidth: 1,
-    backgroundColor: "pink",
+    backgroundColor: "indianred",
   },
   temp: {
     color: "white",
