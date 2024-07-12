@@ -1,22 +1,38 @@
 import React, {useEffect, useState} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import Tabs from "./src/components/Tabs";
-import {ActivityIndicator, Button, StyleSheet, View} from "react-native";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
 import Geolocation, {
   GeolocationResponse,
 } from "@react-native-community/geolocation";
-import {SafeAreaView} from "react-native-safe-area-context";
+import {WEATHER_API_KEY} from "@env";
 
 function App(): React.JSX.Element {
   const [loading, setLoading] = useState(true);
-  const [location, setLocation] = useState<GeolocationResponse | null>(null);
   const [error, setError] = useState<String | null>(null);
+  const [weather, setWeather] = useState([]);
+  const [lat, setLat] = useState<number>(0);
+  const [lon, setLon] = useState<number>(0);
+
+  const fetchWeatherData = async () => {
+    try {
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`,
+      );
+      const data = await res.json();
+      console.log(data);
+      setWeather(data);
+    } catch (error) {
+      setError(`Could not fetch weather`);
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     Geolocation.requestAuthorization(
-      () => {
-        console.log("There is authorization here");
-      },
+      () => {},
       error => {
         setError("Permission to access location was denied");
         return;
@@ -25,28 +41,26 @@ function App(): React.JSX.Element {
 
     Geolocation.getCurrentPosition(
       position => {
-        setLocation(position);
+        setLat(position.coords.latitude);
+        setLon(position.coords.longitude);
       },
       error => {
         setError(`Error getting the current location ${error.message}`);
       },
     );
-  }, []);
 
-  if (location != null) {
-    const {latitude, longitude} = location.coords;
-    console.log(
-      `Position obtained: Latitude is ${latitude} while the longitude is ${longitude}`,
-    );
-  }
+    (async () => {
+      await fetchWeatherData();
+    })();
+  }, [lat, lon]);
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size={"large"} color={"blue"} />
-      </View>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <ActivityIndicator size={"large"} color={"blue"} />
+  //     </View>
+  //   );
+  // }
   return (
     <NavigationContainer>
       <Tabs />

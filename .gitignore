@@ -80,3 +80,6 @@ web-build/
 
 # Vs code
 .vscode
+
+# Env variables
+.env
