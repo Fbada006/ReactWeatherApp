@@ -8,7 +8,9 @@ import CityScreen from "../screens/CityScreen";
 const Tab = createBottomTabNavigator();
 
 const Tabs = ({forecast}: any) => {
-  //console.log(forecast.list);
+  console.log("-------------------------");
+  console.log(forecast);
+  console.log("-------------------------");
   return (
     <Tab.Navigator
       screenOptions={{
@@ -54,7 +56,6 @@ const Tabs = ({forecast}: any) => {
       </Tab.Screen>
       <Tab.Screen
         name={"City"}
-        component={CityScreen}
         options={{
           tabBarIcon: ({focused}) => (
             <Feather
@@ -64,7 +65,9 @@ const Tabs = ({forecast}: any) => {
             />
           ),
         }}
-      />
+        >
+        {() => <CityScreen weatherData={forecast.city} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 };

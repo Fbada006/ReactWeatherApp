@@ -10,7 +10,7 @@ function App(): React.JSX.Element {
   if (weather != null && weather) {
     return (
       <NavigationContainer>
-        <Tabs forecast={weather} />
+        <Tabs forecast={weather!} />
       </NavigationContainer>
     );
   }

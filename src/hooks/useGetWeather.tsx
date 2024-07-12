@@ -5,7 +5,7 @@ import {WEATHER_API_KEY} from "@env";
 export const useGetWeather = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState(null);
   const [lat, setLat] = useState<number>(0);
   const [lon, setLon] = useState<number>(0);
 
