@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import IconText from "../components/IconText";
 import moment from "moment";
+import {City} from "../hooks/useGetWeather";
 
-const CityScreen = ({weatherData}: any) => {
+const CityScreen = (city: CityData) => {
   const {
     container,
     imageLayout,
@@ -24,7 +25,7 @@ const CityScreen = ({weatherData}: any) => {
     rowLayout,
   } = styles;
 
-  const {name, country, population, sunrise, sunset} = weatherData;
+  const {name, country, population, sunrise, sunset} = city.city;
 
   return (
     <SafeAreaView style={container}>
@@ -104,5 +105,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+export interface CityData {
+  city: City
+}
 
 export default CityScreen;

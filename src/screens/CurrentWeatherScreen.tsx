@@ -5,7 +5,8 @@ import RowText from "../components/RowText";
 import {getWeatherCondition} from "../utilities/WeatherType";
 import {ListItem, Main} from "../hooks/useGetWeather";
 
-const CurrentWeatherScreen = ({item}: ListItem) => {
+const CurrentWeatherScreen = ({item}: any) => {
+  const listItem = item as ListItem
   const {
     wrapper,
     container,
@@ -18,7 +19,7 @@ const CurrentWeatherScreen = ({item}: ListItem) => {
     message,
   } = styles;
 
-  const {main, weather} = item;
+  const {main, weather} = listItem;
 
   const weatherCondition = weather[0]?.main;
   const {temp, feels_like, temp_max, temp_min}: Main = main;

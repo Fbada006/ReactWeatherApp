@@ -7,17 +7,25 @@ import {
   ImageBackground,
 } from "react-native";
 import UpcomingWeatherListItem from "../components/UpcomingWeatherListItem";
+import {ListItem} from "../hooks/useGetWeather";
 
-const UpcomingWeatherScreen = ({weatherData}: any) => {
-  console.log(weatherData)
-  const renderItem = ({item}: any) => (
-    <UpcomingWeatherListItem
-      dt_txt={item.dt_txt}
-      min={item.main.temp_min}
-      max={item.main.temp_max}
-      condition={item.weather[0].main}
-    />
-  );
+const UpcomingWeatherScreen = (weatherData: UpcomingWeatherData) => {
+  const renderItem = (renderItem: any) => {
+    const {
+      dt_txt,
+      main: {temp_min, temp_max},
+      weather,
+    } = renderItem.item as ListItem;
+
+    return (
+      <UpcomingWeatherListItem
+        dt_txt={dt_txt}
+        min={temp_min}
+        max={temp_max}
+        condition={weather[0].main}
+      />
+    );
+  };
 
   const {container, image} = styles;
 
@@ -26,9 +34,8 @@ const UpcomingWeatherScreen = ({weatherData}: any) => {
       <ImageBackground
         source={require("../../assets/upcoming_background.jpg")}
         style={image}>
-
         <FlatList
-          data={weatherData}
+          data={weatherData.data}
           renderItem={renderItem}
           keyExtractor={item => item.dt_txt}
         />
@@ -47,5 +54,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export interface UpcomingWeatherData {
+  data: ListItem[];
+}
 
 export default UpcomingWeatherScreen;

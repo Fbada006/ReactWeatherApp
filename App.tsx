@@ -12,7 +12,13 @@ function App(): React.JSX.Element {
     const wth = weather as WeatherForecast;
     return (
       <NavigationContainer>
-        <Tabs list={wth.list} />
+        <Tabs
+          city={wth.city}
+          cod={wth.cod}
+          message={wth.message}
+          cnt={wth.cnt}
+          list={wth.list}
+        />
       </NavigationContainer>
     );
   }
