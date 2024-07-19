@@ -4,10 +4,11 @@ import Feather from "react-native-vector-icons/Feather";
 import CurrentWeatherScreen from "../screens/CurrentWeatherScreen";
 import UpcomingWeatherScreen from "../screens/UpcomingWeatherScreen";
 import CityScreen from "../screens/CityScreen";
+import {ListItem, Main, WeatherForecast} from "../hooks/useGetWeather";
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = ({forecast}: any) => {
+const Tabs = (forecast: WeatherForecast) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -36,7 +37,7 @@ const Tabs = ({forecast}: any) => {
             />
           ),
         }}>
-        {() => <CurrentWeatherScreen weatherData={forecast.list[0]} />}
+        {() => <CurrentWeatherScreen item={forecast.list[0]} />}
       </Tab.Screen>
       <Tab.Screen
         name={"Upcoming"}
@@ -61,8 +62,7 @@ const Tabs = ({forecast}: any) => {
               color={focused ? "tomato" : "black"}
             />
           ),
-        }}
-        >
+        }}>
         {() => <CityScreen weatherData={forecast.city} />}
       </Tab.Screen>
     </Tab.Navigator>

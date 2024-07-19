@@ -3,8 +3,9 @@ import {View, Text, SafeAreaView, StyleSheet} from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import RowText from "../components/RowText";
 import {getWeatherCondition} from "../utilities/WeatherType";
+import {ListItem, Main} from "../hooks/useGetWeather";
 
-const CurrentWeatherScreen = ({weatherData}: any) => {
+const CurrentWeatherScreen = ({item}: ListItem) => {
   const {
     wrapper,
     container,
@@ -17,12 +18,10 @@ const CurrentWeatherScreen = ({weatherData}: any) => {
     message,
   } = styles;
 
-  const {
-    main: {temp, feels_like, temp_max, temp_min},
-    weather,
-  } = weatherData;
+  const {main, weather} = item;
 
   const weatherCondition = weather[0]?.main;
+  const {temp, feels_like, temp_max, temp_min}: Main = main;
 
   return (
     <SafeAreaView

@@ -2,16 +2,17 @@ import React from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import Tabs from "./src/components/Tabs";
 import {ActivityIndicator, StyleSheet, View} from "react-native";
-import {useGetWeather} from "./src/hooks/useGetWeather";
+import {useGetWeather, WeatherForecast} from "./src/hooks/useGetWeather";
 import ErrorItem from "./src/components/ErrorItem";
 
 function App(): React.JSX.Element {
   const [loading, error, weather] = useGetWeather();
 
-  if (weather != null && weather.list && !loading) {
+  if (weather != null && !loading) {
+    const wth = weather as WeatherForecast;
     return (
       <NavigationContainer>
-        <Tabs forecast={weather!} />
+        <Tabs list={wth.list} />
       </NavigationContainer>
     );
   }
