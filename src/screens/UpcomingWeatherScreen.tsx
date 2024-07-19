@@ -9,7 +9,7 @@ import {
 import UpcomingWeatherListItem from "../components/UpcomingWeatherListItem";
 import {ListItem} from "../hooks/useGetWeather";
 
-const UpcomingWeatherScreen = (weatherData: UpcomingWeatherData) => {
+const UpcomingWeatherScreen = ({data}: UpcomingWeatherData) => {
   const renderItem = (renderItem: any) => {
     const {
       dt_txt,
@@ -35,7 +35,7 @@ const UpcomingWeatherScreen = (weatherData: UpcomingWeatherData) => {
         source={require("../../assets/upcoming_background.jpg")}
         style={image}>
         <FlatList
-          data={weatherData.data}
+          data={data}
           renderItem={renderItem}
           keyExtractor={item => item.dt_txt}
         />

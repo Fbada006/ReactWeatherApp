@@ -5,8 +5,7 @@ import RowText from "../components/RowText";
 import {getWeatherCondition} from "../utilities/WeatherType";
 import {ListItem, Main} from "../hooks/useGetWeather";
 
-const CurrentWeatherScreen = ({item}: any) => {
-  const listItem = item as ListItem
+const CurrentWeatherScreen = ({listItem}: CurrentWeatherData) => {
   const {
     wrapper,
     container,
@@ -108,5 +107,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
 });
+
+export interface CurrentWeatherData {
+  listItem: ListItem;
+}
 
 export default CurrentWeatherScreen;

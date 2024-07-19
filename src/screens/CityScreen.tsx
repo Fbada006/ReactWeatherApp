@@ -11,7 +11,7 @@ import IconText from "../components/IconText";
 import moment from "moment";
 import {City} from "../hooks/useGetWeather";
 
-const CityScreen = (city: CityData) => {
+const CityScreen = ({city}: CityData) => {
   const {
     container,
     imageLayout,
@@ -25,7 +25,7 @@ const CityScreen = (city: CityData) => {
     rowLayout,
   } = styles;
 
-  const {name, country, population, sunrise, sunset} = city.city;
+  const {name, country, population, sunrise, sunset} = city;
 
   return (
     <SafeAreaView style={container}>

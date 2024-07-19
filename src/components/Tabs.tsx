@@ -37,7 +37,7 @@ const Tabs = (forecast: WeatherForecast) => {
             />
           ),
         }}>
-        {() => <CurrentWeatherScreen item={forecast.list[0]} />}
+        {() => <CurrentWeatherScreen listItem={forecast.list[0]} />}
       </Tab.Screen>
       <Tab.Screen
         name={"Upcoming"}
