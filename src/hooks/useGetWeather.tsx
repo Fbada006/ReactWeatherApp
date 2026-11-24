@@ -6,46 +6,62 @@ export const useGetWeather = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [weather, setWeather] = useState<WeatherForecast | null>(null);
-  const [lat, setLat] = useState<number>(0);
-  const [lon, setLon] = useState<number>(0);
-
-  const fetchWeatherData = async () => {
-    try {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`,
-      );
-      const data: WeatherForecast = await res.json();
-      setWeather(data);
-    } catch (error) {
-      setError(`Could not fetch weather`);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    let cancelled = false;
+
+    const fail = (message: string) => {
+      if (!cancelled) {
+        setError(message);
+        setLoading(false);
+      }
+    };
+
+    const fetchWeatherData = async (lat: number, lon: number) => {
+      try {
+        const res = await fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`,
+        );
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data: WeatherForecast = await res.json();
+        if (!cancelled) {
+          setWeather(data);
+        }
+      } catch (e) {
+        fail("Could not fetch weather");
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    // Ask for permission first, then fetch only once real coordinates arrive,
+    // so we never request the forecast for lat/lon 0.
     Geolocation.requestAuthorization(
-      () => {},
-      error => {
-        setError("Permission to access location was denied");
-        return;
+      () => {
+        Geolocation.getCurrentPosition(
+          position => {
+            fetchWeatherData(
+              position.coords.latitude,
+              position.coords.longitude,
+            );
+          },
+          locationError => {
+            fail(`Error getting the current location ${locationError.message}`);
+          },
+        );
+      },
+      () => {
+        fail("Permission to access location was denied");
       },
     );
 
-    Geolocation.getCurrentPosition(
-      position => {
-        setLat(position.coords.latitude);
-        setLon(position.coords.longitude);
-      },
-      error => {
-        setError(`Error getting the current location ${error.message}`);
-      },
-    );
-
-    (async () => {
-      await fetchWeatherData();
-    })();
-  }, [lat, lon]);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return [loading, error, weather];
 };
